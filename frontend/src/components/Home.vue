@@ -1,11 +1,13 @@
 <template>
     <v-container>
+        {{ todoList }}
         <v-layout row wrap>
             <v-flex xs6>
                 <List/>
             </v-flex>
             <v-flex xs6>
-                <ListAdd/>
+                <ListAdd
+                    @listAdd="listAdd"/>
             </v-flex>
         </v-layout>
     </v-container>
@@ -19,6 +21,20 @@ export default {
     components: {
         List,
         ListAdd
+    },
+    data() {
+        return {
+            todoList: []
+        }
+    },
+    methods: {
+        listAdd(memo) {
+            console.log("get memo")
+            this.todoList.push({
+                status: 'created',
+                memo: memo
+            })
+        }
     }
 }
 </script>
