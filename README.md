@@ -31,8 +31,7 @@
   - 기존 UI 전부 수정할 계획
   - ↑ 현재 디자인이 너무 안좋기때문
 - Crawler
-  - 기존 django custom command 로 수동으로 실행해
-  - python 프로젝트로 따로 분리하여 cron 으로 실행할예정
+  - 일정 시간 마다 실행되도록 container 올릴 예정
   - v1 에서 오류때문에 사용중지한 Multiprocessing 적용예정
 
 <br/>
