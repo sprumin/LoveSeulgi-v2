@@ -34,6 +34,7 @@
   - 기존 django custom command 로 수동으로 실행해
   - python 프로젝트로 따로 분리하여 cron 으로 실행할예정
   - v1 에서 오류때문에 사용중지한 Multiprocessing 적용예정
+  - 이번엔 이미지를 AWS S3 를 이용하여 관리해보고싶다
 
 <br/>
 
