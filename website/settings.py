@@ -25,7 +25,7 @@ SECRET_KEY = 'aw$)qr(d8&e!hnslhp)r07c)a%$r$@3kpu^=m92_s1_yf(hfpg'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
