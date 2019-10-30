@@ -18,6 +18,12 @@ class Photos(models.Model):
         return self.title
 
 
+class InvalidPage(models.Model):
+    idx = models.AutoField(primary_key=True)
+    url = models.CharField(max_length=1024, blank=True, null=True)
+    content = models.TextField(max_length=2048, blank=True, null=True)
+
+
 class Trashcan(models.Model):
     idx = models.AutoField(primary_key=True)
     link = models.CharField(max_length=2048)
