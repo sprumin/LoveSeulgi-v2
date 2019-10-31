@@ -1,5 +1,9 @@
 from .base import *
 
+import os
+
+# SECRET KEY
+SECRET_KEY = os.urandom(40)
 
 DEBUG = False
 
