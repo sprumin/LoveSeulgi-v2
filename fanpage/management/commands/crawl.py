@@ -94,7 +94,7 @@ class Crontab(object):
                 # 이미지 저장
                 p = Photos(link=row['link'], source=row['source'], extension=is_gif, title=row['title'],
                     width=row['width'], height=row['height'])
-                p.photo.save(f"{row['title']}", BytesIO(requests.get(row['image']).content))
+                p.photo.save(f"{row['title']}.{row['extension']}", BytesIO(requests.get(row['image']).content))
 
                 print(f"[SAVE PHOTO]: {row['title']}")
             except:
