@@ -8,7 +8,8 @@ class Photos(models.Model):
     title = models.CharField(max_length=64)
     link = models.CharField(max_length=2048)
     source = models.CharField(max_length=2048)
-    size = models.CharField(max_length=16)
+    width = models.IntegerField(default=0)
+    height = models.IntegerField(default=0)
     views = models.IntegerField(default=0)
     likes = models.IntegerField(default=0)
     is_gif = models.BooleanField(default=False)
@@ -22,8 +23,3 @@ class InvalidPage(models.Model):
     idx = models.AutoField(primary_key=True)
     url = models.CharField(max_length=1024, blank=True, null=True)
     content = models.TextField(max_length=2048, blank=True, null=True)
-
-
-class Trashcan(models.Model):
-    idx = models.AutoField(primary_key=True)
-    link = models.CharField(max_length=2048)
