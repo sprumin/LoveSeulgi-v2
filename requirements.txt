@@ -1,10 +1,14 @@
 beautifulsoup4==4.8.1
 bs4==0.0.1
+certifi==2019.9.11
+chardet==3.0.4
 Django==2.2.5
 django-rest-framework==0.1.0
 djangorestframework==3.10.3
+idna==2.8
 Pillow==6.2.1
 pytz==2019.2
+requests==2.22.0
 selenium==3.141.0
 soupsieve==1.9.4
 sqlparse==0.3.0
