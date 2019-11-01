@@ -92,13 +92,13 @@ class Crontab(object):
                 is_gif = True if row['extension'] == "gif" else False
                 
                 # 이미지 저장
-                p = Photos(link=row['link'], source=row['source'], extension=is_gif, title=row['title'],
+                p = Photos(link=row['link'], source=row['source'], is_gif=is_gif, title=row['title'],
                     width=row['width'], height=row['height'])
-                p.photo.save(f"{row['title']}.{row['extension']}", BytesIO(requests.get(row['image']).content))
+                p.photo.save(f"{uuid.uuid4().hex}.{row['extension']}", BytesIO(requests.get(row['image']).content))
 
                 print(f"[SAVE PHOTO]: {row['title']}")
-            except:
-                print(f"[SAVE ERROR]: {row['title']}")
+            except Exception as e:
+                print(f"[SAVE ERROR]: {row['title']} / {e}")
         
         print("COMPLETE!")
 
