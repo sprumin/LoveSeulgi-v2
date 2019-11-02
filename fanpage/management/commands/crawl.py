@@ -3,8 +3,9 @@ from django.core.management.base import BaseCommand
 from fanpage.models import Photos, InvalidPage
 
 from bs4 import BeautifulSoup
-from selenium import webdriver
 from io import BytesIO
+from selenium import webdriver
+from urllib.parse import urlparse
 
 import json
 import requests
@@ -51,19 +52,22 @@ class Crontab(object):
         html = res.find_all("div", {"class": "rg_meta notranslate"})
         print("LENGTH", len(html))
         image_data = list()
+        extensions = ['jpg', 'jpeg', 'png', 'gif']
 
         for row in html:
             # 이미지, 이미지 게시 페이지 링크, 출처, 확장자, 제목, 넓이, 높이 추출
             row = json.loads(row.text)
-            image_data.append({
-                "image": row['ou'],
-                "link": row['ru'],
-                "source": row['isu'],
-                "extension": row['ity'],
-                "title": row['pt'],
-                "width": row['ow'],
-                "height": row['oh'],
-            })
+            
+            if row['ity'] in extensions:
+                image_data.append({
+                    "image": row['ou'],
+                    "link": row['ru'],
+                    "source": row['isu'],
+                    "extension": row['ity'],
+                    "title": row['pt'],
+                    "width": row['ow'],
+                    "height": row['oh'],
+                })
         
         # SAVE IMAGE
         self.save_photo(image_data)
@@ -78,10 +82,12 @@ class Crontab(object):
         for row in data:
             # 한번 크롤링한 링크는 다시 수집하지 않음
             # TODO: 유효한 링크인지 확인하는 코드 추가
-            if not Photos.objects.filter(link=row['link']).exists():
+
+            if not Photos.objects.filter(link=row['link']).exists() and \
+                not InvalidPage.objects.filter(url__startswith=row['link'].split("?")[0]).exists():
                 valid_data.append(row)
             
-            if len(valid_data) > 10:
+            if len(valid_data) > 30:
                 break
         
         return valid_data
