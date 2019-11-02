@@ -25,15 +25,17 @@
   - 기존 sqlite3
   - Postgresql / Mysql 로 변경예정
   - DB Relation 도 다시 짤 예정
+  - AWS RDS 사용 예정
 - Website Renual
   - 기존에 있던 기능은 삭제되지 않으나 신규 기능이 추가될듯함
   - 웹 사이트 돌아다니면서 참고하기
   - 기존 UI 전부 수정할 계획
   - ↑ 현재 디자인이 너무 안좋기때문
 - Crawler
-  - 기존 django custom command 로 수동으로 실행해
-  - python 프로젝트로 따로 분리하여 cron 으로 실행할예정
+  - 일정 시간 마다 실행되도록 container 올릴 예정
   - v1 에서 오류때문에 사용중지한 Multiprocessing 적용예정
+  - AWS S3 사용 예정
+  - 비 정상적인 페이지의 Url과 Content를 수집해야하기에 chromedriver로 데이터 수집 후 서버에서는 PhantomJS 사용예정
 
 <br/>
 
