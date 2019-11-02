@@ -14,8 +14,6 @@ class Command(BaseCommand):
         for row in blacklist:
             if row['url']:
                 InvalidPage(url=row['url'])
-            elif row['content']:
-                InvalidPage(content=row['content'])
             else:
                 print("[BlackList Error] Invalid Data.")
 
