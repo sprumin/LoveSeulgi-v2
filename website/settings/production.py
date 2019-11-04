@@ -9,10 +9,14 @@ DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
+CONFIG_SECRET_DIR = os.path.join(ROOT_DIR, '.config_secret')
+CONFIG_SETTINGS_COMMON_FILE = os.path.join(CONFIG_SECRET_DIR, 'settings.json')
+
 # AWS
-AWS_ACCESS_KEY_ID = 'AKIAROHI7HIHKP4NFXLE'
-AWS_SECRET_ACCESS_KEY = "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"
-AWS_STORAGE_BUCKET_NAME = 'loveseulgi-v2'
+config_secret = json.loads(open(CONFIG_SETTINGS_COMMON_FILE).read())
+AWS_ACCESS_KEY_ID = config_secret['aws']['access_key_id']
+AWS_SECRET_ACCESS_KEY = config_secret['aws']['secret_access_key']
+AWS_STORAGE_BUCKET_NAME = config_secret['aws']['s3_bucket_name']
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
