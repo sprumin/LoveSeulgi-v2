@@ -81,7 +81,6 @@ class Crontab(object):
 
         for row in data:
             # 한번 크롤링한 링크는 다시 수집하지 않음
-            # TODO: 유효한 링크인지 확인하는 코드 추가
 
             if not Photos.objects.filter(link=row['link']).exists() and \
                 not InvalidPage.objects.filter(url__startswith=row['link'].split("?")[0]).exists():

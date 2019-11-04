@@ -7,18 +7,31 @@ SECRET_KEY = os.urandom(40)
 
 DEBUG = False
 
-ALLOWED_HOSTS = ["loveseulgi.kro.kr"]
+ALLOWED_HOSTS = ["*"]
 
-# S3 Storage
-DEFAULT_FILE_STORAGE = "../storages.MediaStorage"
-STATICFILES_STORAGE = "../storages.StaticStorage"
-MEDIAFILES_LOCATION = "media"
-STATICFILES_LOCATION = "static"
+# AWS
+AWS_ACCESS_KEY_ID = 'AKIAROHI7HIHKP4NFXLE'
+AWS_SECRET_ACCESS_KEY = "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"
+AWS_STORAGE_BUCKET_NAME = 'loveseulgi-v2'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
 
-# AWS_ACCESS
-AWS_ACCESS_KEY_ID = "AKIAROHI7HIHAKJTXION"
-AWS_SECRET_ACCESS_KEY = "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"
-AWS_STORAGE_BUCKET_NAME = "loveseulgi"
+# STATIC
+AWS_STATIC_LOCATION = 'static'
+STATICFILES_DIRS = [
+    os.path.join(ROOT_DIR, 'static'),
+]
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_STATIC_LOCATION)
+STATICFILES_STORAGE = 'website.storages.StaticStorage'
+
+# MEDIA
+AWS_MEDIA_LOCATION = 'media'
+MEDIA_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_MEDIA_LOCATION)
+MEDIA_ROOT = os.path.join(ROOT_DIR, 'media')
+DEFAULT_FILE_STORAGE = 'website.storages.MediaStorage'
+
 
 DATABASES = {
     "default": {
