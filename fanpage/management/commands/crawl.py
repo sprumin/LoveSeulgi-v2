@@ -27,7 +27,11 @@ class Crontab(object):
 
         # check dev environment
         if env == "DEV":
-            driver = webdriver.Chrome("chromedriver.exe")
+            options = webdriver.ChromeOptions()
+            options.add_argument("--headless")
+            options.add_argument("--no-sandbox")
+            options.add_argument("--disable-dev-shm-usage")
+            driver = webdriver.Chrome("chromedriver.exe", chrome_options=options)
         else:
             driver = webdriver.PhantomJS("phantomjs-2.1.1/bin/phandtomjs")
 
