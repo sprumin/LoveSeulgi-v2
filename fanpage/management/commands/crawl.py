@@ -23,13 +23,13 @@ class Crontab(object):
     def execute_crawler(self):
         """ execute crawler return photos data"""
         # Selenium
-        browser = settings.HEADLESS_BROWSER
+        env = settings.ENVIRONMENT
 
         # check dev environment
-        if browser == "phantomjs":
-            driver = webdriver.PhantomJS(browser)
+        if env == "DEV":
+            driver = webdriver.Chrome("chromedriver.exe")
         else:
-            driver = webdriver.Chrome(browser)
+            driver = webdriver.PhantomJS("phantomjs-2.1.1/bin/phandtomjs")
 
         driver.implicitly_wait(3)
         driver.get(self.url)

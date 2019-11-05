@@ -20,8 +20,8 @@ DATABASES = {
     }
 }
 
-# Selenium headless browser
-HEADLESS_BROWSER = "phantomjs"
+# development, production
+ENVIRONMENT = "PROD"
 
 # AWS
 config_secret = json.loads(open(CONFIG_SETTINGS_COMMON_FILE).read())
