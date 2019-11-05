@@ -1,4 +1,5 @@
 from django.core.management.base import BaseCommand
+from django.conf import settings
 
 from fanpage.models import Photos, InvalidPage
 
@@ -22,7 +23,14 @@ class Crontab(object):
     def execute_crawler(self):
         """ execute crawler return photos data"""
         # Selenium
-        driver = webdriver.Chrome("chromedriver.exe")
+        browser = settings.HEADLESS_BROWSER
+
+        # check dev environment
+        if browser == "phantomjs":
+            driver = webdriver.PhantomJS(browser)
+        else:
+            driver = webdriver.Chrome(browser)
+
         driver.implicitly_wait(3)
         driver.get(self.url)
 
@@ -81,7 +89,6 @@ class Crontab(object):
 
         for row in data:
             # 한번 크롤링한 링크는 다시 수집하지 않음
-
             if not Photos.objects.filter(link=row['link']).exists() and \
                 not InvalidPage.objects.filter(url__startswith=row['link'].split("?")[0]).exists():
                 valid_data.append(row)

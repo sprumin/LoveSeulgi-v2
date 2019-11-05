@@ -13,6 +13,16 @@ ALLOWED_HOSTS = ["*"]
 CONFIG_SECRET_DIR = os.path.join(ROOT_DIR, '.config_secret')
 CONFIG_SETTINGS_COMMON_FILE = os.path.join(CONFIG_SECRET_DIR, 'settings.json')
 
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(ROOT_DIR, "db.sqlite3"),
+    }
+}
+
+# Selenium headless browser
+HEADLESS_BROWSER = "phantomjs"
+
 # AWS
 config_secret = json.loads(open(CONFIG_SETTINGS_COMMON_FILE).read())
 AWS_ACCESS_KEY_ID = config_secret['aws']['access_key_id']
@@ -37,10 +47,3 @@ MEDIA_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_MEDIA_LOCATION)
 MEDIA_ROOT = os.path.join(ROOT_DIR, 'media')
 DEFAULT_FILE_STORAGE = 'website.storages.MediaStorage'
 
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(ROOT_DIR, "db.sqlite3"),
-    }
-}
