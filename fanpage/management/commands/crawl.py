@@ -5,6 +5,7 @@ from fanpage.models import Photos, InvalidPage
 
 from bs4 import BeautifulSoup
 from io import BytesIO
+from multiprocessing import Pool
 from selenium import webdriver
 from urllib.parse import urlparse
 
@@ -40,7 +41,7 @@ class Crontab(object):
 
         # Full Scroll
         last_height = driver.execute_script("return document.body.scrollHeight")
-        pause = 1
+        pause = 0.5
 
         while True:
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
@@ -60,7 +61,6 @@ class Crontab(object):
             last_height = new_height
 
         res = BeautifulSoup(driver.page_source, "html.parser")
-
         html = res.find_all("div", {"class": "rg_meta notranslate"})
         print("LENGTH", len(html))
         image_data = list()
@@ -81,8 +81,10 @@ class Crontab(object):
                     "height": row['oh'],
                 })
         
-        # SAVE IMAGE
-        self.save_photo(image_data)
+        valid_data = self.page_valid_check(image_data)
+
+        # SAVE IMAGE BY MULTIPROCESSING
+        # self.save_photo(image_data)
 
         # drvier 종료
         driver.close()
@@ -97,27 +99,26 @@ class Crontab(object):
                 not InvalidPage.objects.filter(url__startswith=row['link'].split("?")[0]).exists():
                 valid_data.append(row)
             
+            """
+            # development test data
             if len(valid_data) > 30:
                 break
-        
+            """
         return valid_data
 
     def save_photo(self, data):
         """ save for database """
-        valid_data = self.page_valid_check(data)
+        try:
+            is_gif = True if data['extension'] == "gif" else False
+            
+            # 이미지 저장
+            p = Photos(link=data['link'], source=data['source'], is_gif=is_gif, title=data['title'],
+                width=data['width'], height=data['height'])
+            p.photo.save(f"{uuid.uuid4().hex}.{data['extension']}", BytesIO(requests.get(data['image']).content))
 
-        for row in valid_data:
-            try:
-                is_gif = True if row['extension'] == "gif" else False
-                
-                # 이미지 저장
-                p = Photos(link=row['link'], source=row['source'], is_gif=is_gif, title=row['title'],
-                    width=row['width'], height=row['height'])
-                p.photo.save(f"{uuid.uuid4().hex}.{row['extension']}", BytesIO(requests.get(row['image']).content))
-
-                print(f"[SAVE PHOTO]: {row['title']}")
-            except Exception as e:
-                print(f"[SAVE ERROR]: {row['title']} / {e}")
+            print(f"[SAVE PHOTO]: {data['title']}")
+        except Exception as e:
+            print(f"[SAVE ERROR]: {data['title']} / {e}")
         
         print("COMPLETE!")
 
@@ -133,4 +134,5 @@ class Command(BaseCommand):
 
         cron = Crontab(keyword)
         cron.execute_crawler()
+        
         del cron

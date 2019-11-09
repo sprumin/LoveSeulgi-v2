@@ -10,6 +10,10 @@ DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
+INSTALLED_APPS += [
+    'storages',
+]
+
 CONFIG_SECRET_DIR = os.path.join(ROOT_DIR, '.config_secret')
 CONFIG_SETTINGS_COMMON_FILE = os.path.join(CONFIG_SECRET_DIR, 'settings.json')
 
