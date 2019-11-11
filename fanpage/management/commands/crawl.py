@@ -5,7 +5,6 @@ from fanpage.models import Photos, InvalidPage
 
 from bs4 import BeautifulSoup
 from io import BytesIO
-from multiprocessing import Pool
 from selenium import webdriver
 from urllib.parse import urlparse
 
@@ -23,6 +22,7 @@ class Crontab(object):
 
     def execute_crawler(self):
         """ execute crawler return photos data"""
+        print("*** Start Crawler ***")
         # Selenium
         env = settings.ENVIRONMENT
 
@@ -83,14 +83,16 @@ class Crontab(object):
         
         valid_data = self.page_valid_check(image_data)
 
-        # SAVE IMAGE BY MULTIPROCESSING
-        # self.save_photo(image_data)
+        # SAVE IMAGE BY MULTIPROCESSING`
+        self.save_photo(valid_data)
 
         # drvier 종료
         driver.close()
+        print("*** driver close ***")
 
     def page_valid_check(self, data):
         """ valid check for response data, url etc.."""
+        print("*** valid check ***")
         valid_data = list()
 
         for row in data:
@@ -108,17 +110,19 @@ class Crontab(object):
 
     def save_photo(self, data):
         """ save for database """
-        try:
-            is_gif = True if data['extension'] == "gif" else False
-            
-            # 이미지 저장
-            p = Photos(link=data['link'], source=data['source'], is_gif=is_gif, title=data['title'],
-                width=data['width'], height=data['height'])
-            p.photo.save(f"{uuid.uuid4().hex}.{data['extension']}", BytesIO(requests.get(data['image']).content))
+        print("*** save photo ***")
+        for row in data:
+            try:
+                is_gif = True if row['extension'] == "gif" else False
+                
+                # 이미지 저장
+                p = Photos(link=row['link'], source=row['source'], is_gif=is_gif, title=row['title'],
+                    width=row['width'], height=row['height'])
+                p.photo.save(f"{uuid.uuid4().hex}.{row['extension']}", BytesIO(requests.get(row['image']).content))
 
-            print(f"[SAVE PHOTO]: {data['title']}")
-        except Exception as e:
-            print(f"[SAVE ERROR]: {data['title']} / {e}")
+                print(f"[SAVE PHOTO]: {row['title']}")
+            except Exception as e:
+                print(f"[SAVE ERROR]: {row['title']} / {e}")
         
         print("COMPLETE!")
 
