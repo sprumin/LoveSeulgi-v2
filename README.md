@@ -20,7 +20,8 @@
 - `Frontend` 와 `Backend` 구분
   - 기존 jinja2 + Django ( 순수 Django 기능 )
   - `Frontend` : Vue.js
-  - `Backend` :  django-rest-framework api server
+  - `Backend` :  <del>django-rest-framework api server</del> Django
+                 API Server를 운영하는데 DRF를 굳이 사용할 필요가 없을것같아 편한 개발 방식을 선택
 - Database 변경
   - 기존 sqlite3
   - Postgresql / Mysql 로 변경예정
