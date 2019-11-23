@@ -9,6 +9,7 @@ from selenium import webdriver
 from urllib.parse import urlparse
 
 import json
+import multiprocessing
 import requests
 import uuid
 import time
@@ -84,7 +85,13 @@ class Crontab(object):
         valid_data = self.page_valid_check(image_data)
 
         # SAVE IMAGE BY MULTIPROCESSING`
-        self.save_photo(valid_data)
+        if env == "DEV":
+            self.save_photo(valid_data)
+        else:
+            pool = multiprocessing.Pool(processes=4)
+            pool.map(self.save_photo, valid_data)
+            pool.close()
+            pool.join()
 
         # drvier 종료
         driver.close()
@@ -111,7 +118,23 @@ class Crontab(object):
     def save_photo(self, data):
         """ save for database """
         print("*** save photo ***")
-        for row in data:
+
+        if env == "DEV":
+            for row in data:
+                try:
+                    is_gif = True if row['extension'] == "gif" else False
+                    
+                    # 이미지 저장
+                    p = Photos(link=row['link'], source=row['source'], is_gif=is_gif, title=row['title'],
+                        width=row['width'], height=row['height'])
+                    p.photo.save(f"{uuid.uuid4().hex}.{row['extension']}", BytesIO(requests.get(row['image']).content))
+
+                    print(f"[SAVE PHOTO]: {row['title']}")
+                except Exception as e:
+                    print(f"[SAVE ERROR]: {row['title']} / {e}")
+        else:
+            row = data
+
             try:
                 is_gif = True if row['extension'] == "gif" else False
                 
@@ -123,7 +146,6 @@ class Crontab(object):
                 print(f"[SAVE PHOTO]: {row['title']}")
             except Exception as e:
                 print(f"[SAVE ERROR]: {row['title']} / {e}")
-        
         print("COMPLETE!")
 
 

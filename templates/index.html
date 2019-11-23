@@ -3,10 +3,6 @@
     <head>
     </head>
     <body>
-        <h1>TEST</h1>
-        <a href="{% static 'test.txt' %}">GO</a>
-        {% for row in photos %}
-            <a href="{{ row.photo.url }}">MEDIA</a>
-        {% endfor %}
+        <img src="{{ photos.0.photo.url }}" alt="">
     </body>
 </html>
