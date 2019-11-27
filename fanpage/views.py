@@ -1,4 +1,5 @@
-from django.http import JsonResponse
+from django.core import serializers
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import View
 
@@ -27,7 +28,9 @@ class PhotoView(View):
             result = get_photos(width, height, max_width, max_height)
             status = 200
         
-        return JsonResponse(result, status=status)
+        result = serializers.serialize('json', result)
+        
+        return HttpResponse(result, content_type="text/json-comment-filtered", status=status)
 
     def put(self, request, photo_id):
         """ Photo Info Update """
