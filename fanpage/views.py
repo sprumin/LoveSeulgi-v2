@@ -31,6 +31,9 @@ class PhotoView(View):
         result = serializers.serialize('json', result)
         
         return HttpResponse(result, content_type="text/json-comment-filtered", status=status)
+    
+    def post(self, request):
+        """ Photo Add """
 
     def put(self, request, photo_id):
         """ Photo Info Update """
@@ -38,4 +41,15 @@ class PhotoView(View):
 
     def delete(self, request, photo_id):
         """ Photo Delete """
-        pass
+        try:
+            photo = Photos.objects.get(idx=photo_id)
+            photo.delete()
+
+            result = {"result": f"Photo {photo_id} is deleted"
+            status = 200
+        except Exception as e:
+            print(e)
+            result = {"error": "Invalid photo id"}
+            status = 400
+
+        return JsonResponse(result, status=status)
