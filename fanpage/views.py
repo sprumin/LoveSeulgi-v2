@@ -38,6 +38,7 @@ class PhotoView(View):
         # 이거 opencv 써서 이미지 정보 뺴와야댈거가틈
         # 아무리 생각해도 유저가 이미지 정보를 일일히 입력하는것도 이상하고
         # 그렇다고 테이블 따로파자니 어 괜찮은거같기도 고민좀 해봅시다.
+        # 추후에 유저 포스트 기능이라던지 그런거 생기면 
 
     def put(self, request, photo_id):
         """ Photo Info Update """
