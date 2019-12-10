@@ -38,6 +38,8 @@ class PhotoView(View):
         # 이거 opencv 써서 이미지 정보 뺴와야댈거가틈
         # 아무리 생각해도 유저가 이미지 정보를 일일히 입력하는것도 이상하고
         # 그렇다고 테이블 따로파자니 어 괜찮은거같기도 고민좀 해봅시다.
+        # 굳이 지금 필요한건 아니고 나중에 유저가 이미지 추가하는 기능 생기면 작업하기로
+        # 일단은 조회(유저)랑 삭제(어드민)만 필요함
 
     def put(self, request, photo_id):
         """ Photo Info Update """
@@ -49,7 +51,7 @@ class PhotoView(View):
             photo = Photos.objects.get(idx=photo_id)
             photo.delete()
 
-            result = {"result": f"Photo {photo_id} is deleted"
+            result = {"result": f"Photo {photo_id} is deleted"}
             status = 200
         except Exception as e:
             print(e)

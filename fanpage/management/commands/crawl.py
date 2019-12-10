@@ -15,6 +15,9 @@ import uuid
 import time
 
 
+env = settings.ENVIRONMENT
+
+
 class Crontab(object):
     """ Crawler execution crontab class """
     def __init__(self, keyword):
@@ -24,8 +27,6 @@ class Crontab(object):
     def execute_crawler(self):
         """ execute crawler return photos data"""
         print("*** Start Crawler ***")
-        # Selenium
-        env = settings.ENVIRONMENT
 
         # check dev environment
         if env == "DEV":
