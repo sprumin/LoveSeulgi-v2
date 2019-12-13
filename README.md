@@ -26,7 +26,7 @@
   - 기존 sqlite3
   - Postgresql / Mysql 로 변경예정
   - DB Relation 도 다시 짤 예정
-  - AWS RDS 사용 예정
+  - AWS RDS 사용 예정 ( 이거 요금관리 잘해야할듯 )
 - Website Renual
   - 기존에 있던 기능은 삭제되지 않으나 신규 기능이 추가될듯함
   - 웹 사이트 돌아다니면서 참고하기
