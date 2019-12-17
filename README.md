@@ -43,4 +43,5 @@
 
 
 - Todo List 는 github Issue 기능으로 관리할 예정
+- 프론트엔드 개발시간이 좀 걸릴예정
 - Develop by sprumin@gmail.com 
