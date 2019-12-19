@@ -36,7 +36,9 @@
   - 일정 시간 마다 실행되도록 container 올릴 예정
   - v1 에서 오류때문에 사용중지한 Multiprocessing 적용예정
   - AWS S3 사용 예정
-  - 비 정상적인 페이지의 Url과 Content를 수집해야하기에 chromedriver로 데이터 수집 후 서버에서는 PhantomJS 사용예정
+  - 비 정상적인 페이지의 Url과 Content를 수집해야하기에 Blacklist 테이블 생성
+  - dev. Chromedriver
+  - prod. PhantomJS
 
 <br/>
 
