@@ -28,7 +28,7 @@
   - 기존 sqlite3
   - Postgresql / Mysql 로 변경예정
   - DB Relation 도 다시 짤 예정
-  - AWS RDS 사용 예정
+  - AWS RDS 사용 예정 ( 이거 요금관리 잘해야할듯 )
 - Website Renual
   - 기존에 있던 기능은 삭제되지 않으나 신규 기능이 추가될듯함
   - 웹 사이트 돌아다니면서 참고하기
@@ -38,11 +38,14 @@
   - 일정 시간 마다 실행되도록 container 올릴 예정
   - v1 에서 오류때문에 사용중지한 Multiprocessing 적용예정
   - AWS S3 사용 예정
-  - 비 정상적인 페이지의 Url과 Content를 수집해야하기에 chromedriver로 데이터 수집 후 서버에서는 PhantomJS 사용예정
+  - 비 정상적인 페이지의 Url과 Content를 수집해야하기에 Blacklist 테이블 생성
+  - dev. Chromedriver
+  - prod. PhantomJS
 
 <br/>
 
 
 
 - Todo List 는 github Issue 기능으로 관리할 예정
+- 프론트엔드 개발시간이 좀 걸릴예정
 - Develop by sprumin@gmail.com 
