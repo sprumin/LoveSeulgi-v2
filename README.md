@@ -1,4 +1,4 @@
-**# RedVelvet Seulgi Fan Page**
+# **RedVelvet Seulgi Fan Page**
 
 
 
