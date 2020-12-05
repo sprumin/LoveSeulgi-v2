@@ -9,10 +9,10 @@ class Album(models.Model):
     id = models.AutoField(primary_key=True)
     photo = models.ImageField(upload_to="CrawlImage")
     photo_name = models.CharField(default=uuid.uuid4(), max_length=256)
-    photo_link = models.CharField(defualt="", max_length=2048)
+    photo_link = models.CharField(default="", max_length=2048)
     photo_source = models.CharField(default="", max_length=2048)
     view = models.IntegerField(default=0)
-    like = models.IntegerField(defautl=0)
+    like = models.IntegerField(default=0)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
