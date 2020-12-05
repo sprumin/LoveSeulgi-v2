@@ -45,7 +45,7 @@
 <br/>
 
 ### 개발 과정
-
+- 이미지 크롤러 구현
 - Django Rest Framework 공부 
 - 백엔드 개발
 - React.js 공부
